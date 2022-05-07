@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-from base.models import Course
+from base.models import Course, Statistics
 from base.serializers import CourseSerializer
 
 class RegisterTeacherAPIView(APIView):
@@ -21,7 +21,10 @@ class RegisterTeacherAPIView(APIView):
             )
             new_user.save()
             a.user = new_user
-            a.save()    
+            a.save()
+            stat = Statistics.objects.first()
+            stat.number_of_teachers += int(Teacher.objects.all().count())
+            stat.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

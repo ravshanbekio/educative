@@ -24,7 +24,7 @@ class Course(models.Model):
     number_of_students = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.course_name}, category - {self.category.category_name}"
+        return f"{self.course_name}, category -  "
 
     class Meta:
         verbose_name_plural = "Course"
@@ -38,3 +38,11 @@ class Media(models.Model):
 
     class Meta:
         verbose_name_plural = "Media"
+
+class Statistics(models.Model):
+    number_of_courses = models.IntegerField(default=0)
+    number_of_teachers = models.IntegerField(default=0)
+    number_of_students = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return f"{self.number_of_students} students, {self.number_of_teachers} teachers, {self.number_of_courses} courses"

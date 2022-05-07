@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Course
+from .models import Course, Statistics
 from .serializers import CourseSerializer
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from teacher.models import Teacher
 from rest_framework.views import APIView
@@ -19,6 +19,9 @@ class AddCourseView(APIView):
             serializer = CourseSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                stat = Statistics.objects.first()
+                stat.number_of_courses += int(Course.objects.all().count())
+                stat.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:

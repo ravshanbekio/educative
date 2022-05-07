@@ -1,7 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from .views import RegisterTeacherAPIView, TeacherDashboardView
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register("teacher-dashboard",TeacherDashboardView)
 
 urlpatterns = [
     path('teacher-register/',RegisterTeacherAPIView.as_view(), name='teacher-register'),
-    path('teacher-dashboard/',TeacherDashboardView.as_view(), name='teacher-dashboard'),
+    path('',include(router.urls))
 ] 

@@ -24,7 +24,7 @@ class Course(models.Model):
     number_of_students = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.course_name}, category -  "
+        return f"{self.course_name}, category - {self.cateogory.category_name}"
 
     class Meta:
         verbose_name_plural = "Course"
@@ -46,3 +46,14 @@ class Statistics(models.Model):
     
     def __str__(self):
         return f"{self.number_of_students} students, {self.number_of_teachers} teachers, {self.number_of_courses} courses"
+
+    class Meta:
+        verbose_name_plural = "Total statistics"
+
+class TeacherStat(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    number_of_courses = models.ManyToManyField(Course)
+    
+    def __str__(self):
+        return self.teacher.first_name + ' ' + self.last_name
+

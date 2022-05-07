@@ -24,7 +24,7 @@ class Course(models.Model):
     number_of_students = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.course_name}, category - {self.cateogory.category_name}"
+        return f"{self.course_name}, category - {self.category.category_name}"
 
     class Meta:
         verbose_name_plural = "Course"
